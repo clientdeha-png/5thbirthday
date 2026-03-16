@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+font-family:sans-serif;
+}
+
+/* background */
+
+#scene{
+position:relative;
+width:100vw;
+height:100vh;
+
+background:url("./room.png");
+background-size:cover;
+background-position:center;
+}
+
+/* rope */
+
+#rope{
+position:absolute;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:6px;
+height:90px;
+background:#c89c5c;
+border-radius:3px;
+z-index:1;
+}
+
+/* sukuna */
+
+#sukuna{
+position:absolute;
+top:90px;
+left:50%;
+transform:translateX(-50%);
+width:160px;
+cursor:grab;
+z-index:3;
+}
+
+/* megumi */
+
+#megumi{
+position:absolute;
+bottom:120px;
+left:50%;
+transform:translateX(-50%);
+width:150px;
+z-index:4;
+}
+
+/* dialog */
+
+.dialog{
+position:absolute;
+background:#ff4d4d;
+color:white;
+padding:10px 18px;
+border-radius:20px;
+font-size:16px;
+}
+
+/* sukuna text */
+
+#sukunaText{
+top:110px;
+right:70px;
+}
+
+/* megumi text */
+
+#megumiText{
+bottom:230px;
+left:60px;
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="scene">
+
+<div id="rope"></div>
+
+<img id="sukuna" src="./sukuna1234.png">
+
+<img id="megumi" src="./megumi4321.png">
+
+<div id="sukunaText" class="dialog">
+Happy Birthday Baby 😈
+</div>
+
+<div id="megumiText" class="dialog">
+Sukuna chahiye mujhe, usko niche lao!
+</div>
+
+</div>
+
+<script>
+
+let sukuna=document.getElementById("sukuna")
+let rope=document.getElementById("rope")
+let megumiText=document.getElementById("megumiText")
+
+let startY=0
+let dragging=false
+
+/* megumi dialog after 2 sec */
+
+setTimeout(()=>{
+megumiText.style.display="block"
+},2000)
+
+/* drag start */
+
+sukuna.addEventListener("mousedown",e=>{
+dragging=true
+startY=e.clientY
+})
+
+sukuna.addEventListener("touchstart",e=>{
+dragging=true
+startY=e.touches[0].clientY
+})
+
+/* drag move */
+
+function move(y){
+
+let moveY=y-startY
+
+if(moveY>0){
+
+sukuna.style.transform=
+"translate(-50%,"+moveY+"px)"
+
+rope.style.height=90+moveY+"px"
+
+}
+
+/* next page */
+
+if(moveY>250){
+
+window.location.href="page3.html"
+
+}
+
+}
+
+document.addEventListener("mousemove",e=>{
+if(!dragging)return
+move(e.clientY)
+})
+
+document.addEventListener("touchmove",e=>{
+if(!dragging)return
+move(e.touches[0].clientY)
+})
+
+document.addEventListener("mouseup",()=>{
+dragging=false
+})
+
+document.addEventListener("touchend",()=>{
+dragging=false
+})
+
+</script>
+
+</body>
+</html>
