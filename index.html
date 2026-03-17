@@ -1,30 +1,71 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Muskan Birthday</title>
 
 <style>
 
 body{
 margin:0;
+height:100vh;
+font-family:Arial;
 overflow:hidden;
-font-family:sans-serif;
 }
 
-/* background */
+/* PAGE 1 */
 
-#scene{
+#page1{
+height:100vh;
+background:url("bg.jpg.jpeg");
+background-size:cover;
+background-position:center;
+position:relative;
+}
+
+/* password box */
+
+.passwordBox{
+position:absolute;
+top:55%;
+left:65%;
+transform:translate(-50%,-50%);
+text-align:center;
+}
+
+input{
+width:120px;
+padding:10px;
+font-size:20px;
+text-align:center;
+border:none;
+border-radius:8px;
+}
+
+button{
+margin-top:10px;
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:gold;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* PAGE 2 */
+
+#page2{
+display:none;
 position:relative;
 width:100vw;
 height:100vh;
-
-background:url("./room.png");
+background:url("./room.png.jpeg");
 background-size:cover;
 background-position:center;
 }
-
-/* rope */
 
 #rope{
 position:absolute;
@@ -34,11 +75,7 @@ transform:translateX(-50%);
 width:6px;
 height:90px;
 background:#c89c5c;
-border-radius:3px;
-z-index:1;
 }
-
-/* sukuna */
 
 #sukuna{
 position:absolute;
@@ -47,10 +84,7 @@ left:50%;
 transform:translateX(-50%);
 width:160px;
 cursor:grab;
-z-index:3;
 }
-
-/* megumi */
 
 #megumi{
 position:absolute;
@@ -58,10 +92,7 @@ bottom:120px;
 left:50%;
 transform:translateX(-50%);
 width:150px;
-z-index:4;
 }
-
-/* dialog */
 
 .dialog{
 position:absolute;
@@ -72,14 +103,10 @@ border-radius:20px;
 font-size:16px;
 }
 
-/* sukuna text */
-
 #sukunaText{
 top:110px;
 right:70px;
 }
-
-/* megumi text */
 
 #megumiText{
 bottom:230px;
@@ -87,18 +114,65 @@ left:60px;
 display:none;
 }
 
+/* PAGE 3 */
+
+#page3{
+display:none;
+width:100%;
+height:100vh;
+background:linear-gradient(to bottom,#ffb6d9,#ffd6ec);
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+}
+
+#page3 img{
+width:220px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+margin-bottom:20px;
+}
+
+#page3 p{
+max-width:80%;
+font-size:18px;
+color:#8b004f;
+line-height:1.6;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div id="scene">
+<!-- PAGE 1 -->
+
+<div id="page1">
+
+<div class="passwordBox">
+
+<input type="password" id="pass" placeholder="••••">
+
+<br>
+
+<button onclick="unlock()">ENTER</button>
+
+</div>
+
+</div>
+
+<!-- PAGE 2 -->
+
+<div id="page2">
 
 <div id="rope"></div>
 
-<img id="sukuna" src="./sukuna1234.png">
+<img id="sukuna" src="./sukuna1234.png.png">
 
-<img id="megumi" src="./megumi4321.png">
+<img id="megumi" src="./megumi4321.png.png">
 
 <div id="sukunaText" class="dialog">
 Happy Birthday Baby 😈
@@ -110,7 +184,47 @@ Sukuna chahiye mujhe, usko niche lao!
 
 </div>
 
+<!-- PAGE 3 -->
+
+<div id="page3">
+
+<img src="mayanak.jpg">
+
+<p>
+Muskan… 💖  
+Sach kahu to tum meri life me ek bohot special jagah rakhti ho.  
+Tumhari smile, tumhari baatein, sab kuch bohot pyara hai.  
+Bas aaj ke din ye kehna tha…  
+Happy Birthday 🎂✨  
+Hamesha khush rehna 😊
+</p>
+
+</div>
+
 <script>
+
+/* PASSWORD */
+
+function unlock(){
+
+var p=document.getElementById("pass").value;
+
+if(p==="1907"){
+
+document.getElementById("page1").style.display="none";
+document.getElementById("page2").style.display="block";
+
+}
+
+else{
+
+alert("Wrong Password");
+
+}
+
+}
+
+/* SCENE */
 
 let sukuna=document.getElementById("sukuna")
 let rope=document.getElementById("rope")
@@ -119,13 +233,9 @@ let megumiText=document.getElementById("megumiText")
 let startY=0
 let dragging=false
 
-/* megumi dialog after 2 sec */
-
 setTimeout(()=>{
 megumiText.style.display="block"
 },2000)
-
-/* drag start */
 
 sukuna.addEventListener("mousedown",e=>{
 dragging=true
@@ -137,26 +247,23 @@ dragging=true
 startY=e.touches[0].clientY
 })
 
-/* drag move */
-
 function move(y){
 
 let moveY=y-startY
 
 if(moveY>0){
 
-sukuna.style.transform=
-"translate(-50%,"+moveY+"px)"
-
+sukuna.style.transform="translate(-50%,"+moveY+"px)"
 rope.style.height=90+moveY+"px"
 
 }
 
-/* next page */
+/* NEXT PAGE */
 
 if(moveY>250){
 
-window.location.href="page3.html"
+document.getElementById("page2").style.display="none";
+document.getElementById("page3").style.display="flex";
 
 }
 
@@ -172,15 +279,11 @@ if(!dragging)return
 move(e.touches[0].clientY)
 })
 
-document.addEventListener("mouseup",()=>{
-dragging=false
-})
-
-document.addEventListener("touchend",()=>{
-dragging=false
-})
+document.addEventListener("mouseup",()=>dragging=false)
+document.addEventListener("touchend",()=>dragging=false)
 
 </script>
 
 </body>
+
 </html>
